@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:smartclass/screens/signup-in/signin_guru.dart';
+
+import 'package:smartclass/screens/signup-in/signin_siswa.dart';
 
 class First extends StatefulWidget {
   const First({super.key});
@@ -18,10 +21,10 @@ class _FirstState extends State<First> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GestureDetector(
-              // onTap: () {
-              //   Navigator.pushReplacement(
-              //       context, MaterialPageRoute(builder: (context) => Guru()));
-              // },
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => SignInSiswa()));
+              },
               child: Container(
                 width: 300,
                 height: 150,
@@ -52,10 +55,10 @@ class _FirstState extends State<First> {
               ),
             ),
             GestureDetector(
-              // onTap: () {
-              //   Navigator.pushReplacement(
-              //       context, MaterialPageRoute(builder: (context) => Siswa()));
-              // },
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => SignInGuru()));
+              },
               child: Container(
                 width: 300,
                 height: 150,

@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:smartclass/screens/signup-in/signup.dart';
+import 'package:smartclass/screens/signup-in/signup_siswa.dart';
+import 'package:smartclass/screens/siswa/home_siswa.dart';
 
-import '../teacher/home.dart';
 import 'components/accountcheck.dart';
 
-class SigniIn extends StatefulWidget {
-  const SigniIn({super.key});
+class SignInSiswa extends StatefulWidget {
+  const SignInSiswa({super.key});
 
   @override
-  State<SigniIn> createState() => _SigniInState();
+  State<SignInSiswa> createState() => _SignInSiswaState();
 }
 
-class _SigniInState extends State<SigniIn> {
+class _SignInSiswaState extends State<SignInSiswa> {
   final textFieldFocusNode = FocusNode();
   bool _obscured = false;
 
@@ -235,7 +235,7 @@ class _SigniInState extends State<SigniIn> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return SignUp();
+                              return SignUpSiswa();
                             },
                           ),
                         );
@@ -255,19 +255,23 @@ class _SigniInState extends State<SigniIn> {
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
-        UserCredential myUser = await _auth.signInWithEmailAndPassword(
-            email: email, password: password);
-
-        if (myUser.user!.emailVerified) {
-          Fluttertoast.showToast(msg: "Login Successful");
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => First()));
-        } else {
-          Get.defaultDialog(
-            title: "Email Verifikasi",
-            middleText: "$email belum terverifikasi",
-          );
-        }
+        var myUser = await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((uid) => {
+                  Fluttertoast.showToast(msg: "Login Successful"),
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => HomeSiswa())),
+                });
+        // if (myUser.user!.emailVerified) {
+        //   Fluttertoast.showToast(msg: "Login Successful");
+        //   Navigator.of(context).pushReplacement(
+        //       MaterialPageRoute(builder: (context) => Home()));
+        // } else {
+        //   Get.defaultDialog(
+        //     title: "Email Verifikasi",
+        //     middleText: "$email belum terverifikasi",
+        //   );
+        // }
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":

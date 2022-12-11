@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:smartclass/screens/signup-in/signin.dart';
+import 'package:smartclass/screens/signup-in/signin_siswa.dart';
 
 import 'components/accountcheck.dart';
 import 'components/usermodel.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class SignUpGuru extends StatefulWidget {
+  const SignUpGuru({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignUpGuru> createState() => _SignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpState extends State<SignUpGuru> {
   final _auth = FirebaseAuth.instance;
 
   String? errorMessage;
@@ -345,7 +345,7 @@ class _SignUpState extends State<SignUp> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return SigniIn();
+                          return SignUpGuru();
                         },
                       ),
                     );
@@ -363,22 +363,22 @@ class _SignUpState extends State<SignUp> {
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
-        UserCredential myUser = await _auth.createUserWithEmailAndPassword(
-            email: email, password: password);
-        //     .then((value) => {postDetailsToFirestore()})
-        //     .catchError((e) {
-        //   Fluttertoast.showToast(msg: e!.message);
-        // });
-        await myUser.user!.sendEmailVerification();
-        Get.defaultDialog(
-            title: "Email Verifikasi",
-            middleText: "Kami telah mengirimkan email verifikasi ke $email",
-            onConfirm: () {
-              postDetailsToFirestore();
-              Get.back();
-              Get.back();
-            },
-            textConfirm: "Ya saya akan cek email");
+        var myUser = await _auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((value) => {postDetailsToFirestore()})
+            .catchError((e) {
+          Fluttertoast.showToast(msg: e!.message);
+        });
+        // await myUser.user!.sendEmailVerification();
+        // Get.defaultDialog(
+        //     title: "Email Verifikasi",
+        //     middleText: "Kami telah mengirimkan email verifikasi ke $email",
+        //     onConfirm: () {
+        //       postDetailsToFirestore();
+        //       Get.back();
+        //       Get.back();
+        //     },
+        //     textConfirm: "Ya saya akan cek email");
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
